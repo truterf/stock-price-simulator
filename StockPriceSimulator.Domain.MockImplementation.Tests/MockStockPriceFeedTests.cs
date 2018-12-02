@@ -18,7 +18,7 @@ namespace StockPriceSimulator.Domain.MockImplementation.Tests
             const int TickerLength = 3;
             IEnumerable<StockPrice> prices;
 
-            using (MockStockPriceFeed feed = new MockStockPriceFeed(NumberOfStocks, TickerLength, 2m, 10000))
+            using (MockStockPriceFeed feed = new MockStockPriceFeed(NumberOfStocks, TickerLength, 10, 10000))
             {
                 prices = feed.GetStockPrices(null);
             }
@@ -33,7 +33,7 @@ namespace StockPriceSimulator.Domain.MockImplementation.Tests
             const int TickerLength = 3;
             IEnumerable<StockPrice> prices;
 
-            using (MockStockPriceFeed feed = new MockStockPriceFeed(NumberOfStocks, TickerLength, 2m, 10000))
+            using (MockStockPriceFeed feed = new MockStockPriceFeed(NumberOfStocks, TickerLength, 10, 10000))
             {
                 prices = feed.GetStockPrices(null);
             }
@@ -48,7 +48,7 @@ namespace StockPriceSimulator.Domain.MockImplementation.Tests
             const int TickerLength = 3;
             IEnumerable<StockPrice> prices;
 
-            using (MockStockPriceFeed feed = new MockStockPriceFeed(NumberOfStocks, TickerLength, 2m, 10000))
+            using (MockStockPriceFeed feed = new MockStockPriceFeed(NumberOfStocks, TickerLength, 10, 10000))
             {
                 prices = feed.GetStockPrices(null);
             }
@@ -65,7 +65,7 @@ namespace StockPriceSimulator.Domain.MockImplementation.Tests
             const int NumberOfStocks = 10;
             const int TickerLength = 3;
 
-            using (MockStockPriceFeed feed = new MockStockPriceFeed(NumberOfStocks, TickerLength, 2m, 10000))
+            using (MockStockPriceFeed feed = new MockStockPriceFeed(NumberOfStocks, TickerLength, 10, 10000))
             {
                 IEnumerable<StockPrice> allPrices = feed.GetStockPrices(null);
 
@@ -94,7 +94,7 @@ namespace StockPriceSimulator.Domain.MockImplementation.Tests
             IEnumerable<StockPrice> firstPrices;
             IEnumerable<StockPrice> secondPrices;
 
-            using (MockStockPriceFeed feed = new MockStockPriceFeed(NumberOfStocks, TickerLength, 100m, RepriceInterval))
+            using (MockStockPriceFeed feed = new MockStockPriceFeed(NumberOfStocks, TickerLength, 100, RepriceInterval))
             {
                 firstPrices = feed.GetStockPrices(null).Select(sp => new StockPrice(sp.Ticker, sp.Price, sp.PriceTime)).ToArray();
                 Thread.Sleep(RepriceInterval * 2);

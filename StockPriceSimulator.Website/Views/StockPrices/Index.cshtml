@@ -1,8 +1,46 @@
-﻿
+﻿@using StockPriceSimulator.Domain;
+@model IEnumerable<StockPrice>
+
 @{
     ViewBag.Title = "Stock Prices";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var grid = new WebGrid(rowsPerPage: ViewBag.PageSize, canSort: false);
+    grid.Bind(source: Model, autoSortAndPage: true);
 }
 
-<h2>Stock Prices</h2>
+<div class="container">
+    <h2>Stock Prices</h2>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="#" class="navbar-brand">Search</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                @using (Html.BeginForm("Index", "StockPrices", FormMethod.Get, new { @class = "navbar-form navbar-left" }))
+                {
+                    <div class="form-group">
+                        <input type="text" name="search" value="@ViewBag.Search" class="form-control" placeholder="ticker" />
+                    </div>
+                    <button type="submit" value="refresh" class="btn btn-success">Refresh</button>
+                }
+            </div>
+        </div>
+    </nav>
+    <div>
+        @grid.Table(
+            tableStyle: "table table-responsive table-bordered",
+            columns: grid.Columns(
+                grid.Column(columnName:"Ticker"),
+                grid.Column(columnName:"Price", format:sp => $"{sp.Price:N6}", style: "right-align"),
+                grid.Column(columnName: "PriceTime", header: "Price Time", format:sp => $"{sp.PriceTime:yyyy-MM-dd HH:mm:ss}")
+            )
+        )
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            @grid.Pager(mode: WebGridPagerModes.All)
+        </div>
+    </div>
+</div>
 

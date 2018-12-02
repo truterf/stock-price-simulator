@@ -15,16 +15,16 @@ namespace StockPriceSimulator.Domain.MockImplementation
         private readonly MockStockPrice[] _stockPrices;
         private readonly Timer _repriceTimer;
         private readonly int _tickerLength;
-        private readonly decimal _priceMovementRange;
+        private readonly int _priceMovementPercentage;
         private readonly Random _random;
 
         private bool disposedValue = false;
 
-        public MockStockPriceFeed(int numberOfStocks, int tickerLength, decimal priceMovementRange, int repriceIntervalMilliseconds)
+        public MockStockPriceFeed(int numberOfStocks, int tickerLength, int priceMovementPercentage, int repriceIntervalMilliseconds)
         {
             _stockPrices = new MockStockPrice[numberOfStocks <= 0 ? 1 : numberOfStocks];
             _tickerLength = tickerLength <= 0 ? 1 : tickerLength;
-            _priceMovementRange = priceMovementRange;
+            _priceMovementPercentage = priceMovementPercentage;
             _random = new Random();
 
             DateTime priceTime = DateTime.Now;
@@ -63,7 +63,7 @@ namespace StockPriceSimulator.Domain.MockImplementation
             {
                 foreach (MockStockPrice stockPrice in _stockPrices)
                 {
-                    stockPrice.MovePrice(stockPrice.Price * new decimal(_random.NextDouble()));
+                    stockPrice.MovePrice(stockPrice.Price * _random.Next(-_priceMovementPercentage, _priceMovementPercentage) / 100);
                 }
             }
         }
